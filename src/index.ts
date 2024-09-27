@@ -18,7 +18,7 @@ export function createPersonInstance(
     id: number,
     address: {street: string, city: string, zip: number}
 ){
-    validatePerson(name, id, address)
+    validate(name, id, address)
 
     switch(person){
         case PERSON_TYPES.PropertyManager:
@@ -36,6 +36,7 @@ export function createPropertyInstance(
     description: string,
     address: IAddress,
 ){
+    validate(name, id, address)
     const propertyBuilder = container.get<PropertyBuilder>(TYPES.PropertyBuilder)
     return propertyBuilder
         .setId(id)
@@ -45,7 +46,7 @@ export function createPropertyInstance(
         .build()
 }
 
-function validatePerson(name: string, id: number, address: IAddress){
+function validate(name: string, id: number, address: IAddress){
     const nameValidator = new ValidateName()
     const idValidator = new ValidateId()
     const addressValidator = new ValidateAddress()
@@ -62,7 +63,6 @@ function validatePerson(name: string, id: number, address: IAddress){
         throw new Error(ValidationErrors.Address)
     }
 }
-
 // Fake person infos.
 const person = container.get<IPerson>(TYPES.PersonFaker)
 const propertyFaker = container.get<IProperty>(TYPES.PropertyFaker)
