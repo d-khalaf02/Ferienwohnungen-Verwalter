@@ -1,30 +1,25 @@
-import { describe, test, expect } from "vitest";
+import 'reflect-metadata'
+import { describe, test, expect } from "vitest"
 import { PropertyManager } from './PropertyManager'
 import { IPerson } from './IPerson'
+import { container } from '../inversifyContainer'
+import { TYPES } from './types'
 
-const personDetails: IPerson = {
-    name: "Diyar Khalaf",
-    id: 10239801234,
-    address: {
-        street: "Niedersachsenring",
-        city: "Verden",
-        zip: 27283,
-    }
-}
+const personDetails: IPerson = container.get<IPerson>(TYPES.PersonFaker)
 
 describe('Guest', () => {
     test('should create an instance of Guest with valid PersonDetails', () => {
         // Arrange
-        const sut = new PropertyManager(personDetails.name, personDetails.id, personDetails.address);
+        const sut = new PropertyManager(personDetails.name, personDetails.id, personDetails.address)
         // Act
         // Assert
 
-        expect(sut).toHaveProperty('name');
-        expect(sut).toHaveProperty('id');
-        expect(sut).toHaveProperty('address');
+        expect(sut).toHaveProperty('name')
+        expect(sut).toHaveProperty('id')
+        expect(sut).toHaveProperty('address')
 
-        expect(sut.address).toHaveProperty('street');
-        expect(sut.address).toHaveProperty('city');
-        expect(sut.address).toHaveProperty('zip');
+        expect(sut.address).toHaveProperty('street')
+        expect(sut.address).toHaveProperty('city')
+        expect(sut.address).toHaveProperty('zip')
     })
 })

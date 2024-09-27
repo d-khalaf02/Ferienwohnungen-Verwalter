@@ -1,5 +1,3 @@
-import { PropertyManager } from '../enities/PropertyManager'
-
 export enum ValidationErrors{
     Name = "This name is invalid!",
     Id = "This id is invalid!",
@@ -7,7 +5,7 @@ export enum ValidationErrors{
 }
 
 abstract class ValidatePerson {
-    private allowedChars = 'qwertzuiopasdfghjklyxcvbnm. '.split('')
+    protected allowedChars = 'qwertzuiopasdfghjklyxcvbnm. '.split('')
 
     protected containsSpace(value : string){
         return value.includes(' ')
@@ -16,7 +14,7 @@ abstract class ValidatePerson {
     protected containsUnallowedChars(value: string): boolean{
         for (const char of value.toLowerCase()){
             if(!this.allowedChars.includes(char)){
-                return true;
+                return true
             }
         }
 
@@ -24,11 +22,11 @@ abstract class ValidatePerson {
     }
 
     protected isGreaterThan1(value: string): boolean{
-        return value.length > 1;
+        return value.length > 1
     }
 
     protected isLessThan41(value: string): boolean{
-        return value.length < 41;
+        return value.length < 41
     }
 
     protected isFloat(value: number): boolean{
@@ -38,29 +36,29 @@ abstract class ValidatePerson {
 
 export class ValidateName extends ValidatePerson {
     constructor(){
-        super();
+        super()
     }
 
     validate(name: string) : boolean{
         let isValid : boolean = true;
 
         if(!this.containsSpace(name)){
-            isValid = false;
+            isValid = false
         }
 
         if(!this.isGreaterThan1(name)){
-            isValid = false;
+            isValid = false
         }
 
         if(!this.isLessThan41(name)){
-            isValid = false;
+            isValid = false
         }
 
         if(this.containsUnallowedChars(name)){
-            isValid = false;
+            isValid = false
         }
 
-        return isValid;
+        return isValid
     }
 }
 
@@ -68,93 +66,96 @@ export class ValidateId extends ValidatePerson{
     constructor(){ super() }
 
     validate(id: number) : boolean{
-        let isValid = true;
+        let isValid = true
 
         if(!this.validDigitsLength(id.toString())){
-            isValid = false;
+            isValid = false
         }
 
         if(this.isFloat(id)){
-            isValid = false;
+            isValid = false
         }
 
-        return isValid;
+        return isValid
     }
 
     private validDigitsLength(value: string){
-        return value.length >= 7 && value.length <= 16;
+        return value.length === 10
     }
 }
 
 export class ValidateAddress extends ValidatePerson{
-    constructor(){ super() }
+    constructor(){
+        super()
+        this.allowedChars = [...this.allowedChars, ...'0123456789'.split('')];
+    }
 
     validate(address: {street: string, city: string, zip: number, }){
-        let isValid: boolean = true;
+        let isValid: boolean = true
 
         if(!this.validateStreet(address.street)){
-            isValid = false;
+            isValid = false
         }
 
         if(!this.validateCity(address.city)){
-            isValid = false;
+            isValid = false
         }
 
         if(!this.validateZip(address.zip)){
-            isValid = false;
+            isValid = false
         }
 
-        return isValid;
+        return isValid
     }
 
     private validateStreet(street: string) : boolean{
-        let isValid: boolean = true;
+        let isValid: boolean = true
 
         if(this.containsUnallowedChars(street)){
-            isValid = false;
+            isValid = false
         }
 
         if(!this.isLessThan41(street)){
-            isValid = false;
+            isValid = false
         }
 
-        return isValid;
+        return isValid
     }
 
     private validateCity(city: string) : boolean{
-        let isValid: boolean = true;
+        let isValid: boolean = true
 
         if(this.containsUnallowedChars(city)){
-            isValid = false;
+            isValid = false
         }
 
         if(!this.isGreaterThan1(city)){
-            isValid = false;
+            isValid = false
         }
 
         if(!this.isLessThan41(city)){
-            isValid = false;
+            isValid = false
         }
 
-        return isValid;
+        return isValid
     }
 
     private validateZip(zip: number): boolean{
-        let isValid: boolean = true;
+        let isValid: boolean = true
 
         if(this.isFloat(zip)){
-            isValid = false;
+            isValid = false
         }
 
         if(!this.validDigitsLength(zip.toString())){
-            isValid = false;
+            isValid = false
         }
 
-        return isValid;
+        return isValid
     }
 
     private validDigitsLength(value: string){
-        return value.length === 5;
+        return value.length === 5 || value.length === 4
     }
 }
 

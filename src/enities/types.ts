@@ -1,6 +1,9 @@
 const TYPES = {
-    Faker: Symbol.for("Faker"),
-    Owner: Symbol.for("Owner"),
+    PersonFaker: Symbol.for('PersonFaker'),
+    PropertyFaker: Symbol.for('PropertyFaker'),
+    Person: Symbol.for('Person'),
+    Property: Symbol.for('Property'),
+    PropertyBuilder: Symbol.for('PropertyBuilder')
 }
 
 export { TYPES }

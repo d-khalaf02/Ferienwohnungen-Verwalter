@@ -1,0 +1,21 @@
+{
+  "name": "ferienwohnungen-verwalter",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:d-khalaf02/Ferienwohnungen-Verwalter.git",
+  "author": "Diyar Khalaf <d.khalaf@xsigns.de>",
+  "license": "MIT",
+  "scripts": {
+    "test:watch": "vitest --watch"
+  },
+  "dependencies": {
+    "@types/node": "^22.7.2",
+    "inversify": "^6.0.2",
+    "reflect-metadata": "^0.2.2",
+    "typescript": "^5.6.2",
+    "vitest": "^2.1.1"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^9.0.2"
+  }
+}
