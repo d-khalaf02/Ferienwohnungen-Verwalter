@@ -1,41 +1,32 @@
 import { describe, expect, test } from 'vitest'
-import { TYPES } from './enities/types'
-import { createPersonInstance } from './index'
-import { IPerson } from './enities/IPerson'
-
-import { PERSON_TYPES } from './enities/Person.enum'
-import { container } from './inversifyContainer'
-
-const personDetails: IPerson[] = [
-    container.get<IPerson>(TYPES.PersonFaker),
-    container.get<IPerson>(TYPES.PersonFaker),
-    container.get<IPerson>(TYPES.PersonFaker),
-]
+import type { IPerson } from './enities/interfaces/IPerson'
+import { property } from './index'
 
 describe('Verwalter', () => {
-    test.each(
-        personDetails
-    )('should initiliaze a Person with valid PersonDetails ($name, $id, $address)', ({ name, id, address}) => {
-        name = name.replace('\\', '')
-            .replace('\'', '')
-            .replace('-', '')
+    test('property instance should contains all informations about a property and its owner and manager and the current guests', () => {
+        const sut = property
 
-        address.street = address.street
-            .replace('\\', '')
-            .replace('\'', '')
-            .replace('-', '')
+        expect(sut).toHaveProperty('id')
+        expect(sut).toHaveProperty('name')
+        expect(sut).toHaveProperty('description')
+        expect(sut).toHaveProperty('address')
+        expect(sut.address).toHaveProperty('street')
+        expect(sut.address).toHaveProperty('zip')
+        expect(sut.address).toHaveProperty('city')
 
-        address.street = address.street.replace('\\', '')
-        address.city = address.city.replace('\\', '')
+        expect(sut).toHaveProperty('owner')
+        testPerson(sut.owner)
 
-        console.log('name: ' + name)
-        console.log('street:' + address.street)
-        console.log('city:' + address.city)
-        console.log('zip:' + address.zip)
-        let sut: IPerson = createPersonInstance(PERSON_TYPES.Owner, name, id, address)
-
-        expect(sut).toHaveProperty('name');
-        expect(sut).toHaveProperty('id');
-        expect(sut).toHaveProperty('address');
+        expect(sut).toHaveProperty('propertyManager')
+        testPerson(sut.propertyManager)
     })
+
+    function testPerson(person: IPerson){
+        expect(person).toHaveProperty('id')
+        expect(person).toHaveProperty('name')
+        expect(person).toHaveProperty('address')
+        expect(person.address).toHaveProperty('street')
+        expect(person.address).toHaveProperty('zip')
+        expect(person.address).toHaveProperty('city')
+    }
 })

@@ -1,5 +1,5 @@
-import { IPerson } from './IPerson'
-import { IAddress } from './IAddress'
+import { IPerson } from '../interfaces/IPerson'
+import { IAddress } from '../interfaces/IAddress'
 export abstract class Person implements IPerson{
     name: string
     id: number

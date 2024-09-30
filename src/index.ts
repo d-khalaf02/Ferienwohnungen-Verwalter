@@ -1,118 +1,52 @@
-import type { IProperty } from './enities/IProperty'
-import type { Person } from './enities/Person'
-import { TYPES } from './enities/types'
-import type { PropertyBuilder } from './PropertyBuilder'
-import { ValidateAddress, ValidateId, ValidateName, ValidationErrors } from './utils/ValidatePerson'
-import { PERSON_TYPES } from './enities/Person.enum'
-import { PropertyManager } from './enities/PropertyManager'
-import { Owner } from './enities/Owner'
-import { Guest } from './enities/Guest'
 import 'reflect-metadata'
-import { IPerson } from './enities/IPerson'
-import { container } from './inversifyContainer'
-import { IAddress } from './enities/IAddress'
+import { PERSON_TYPES } from './enities/enums/Person.enum'
+import type { IBooking } from './enities/interfaces/IBooking'
+import { IPerson } from './enities/interfaces/IPerson'
+import { IProperty } from './enities/interfaces/IProperty'
+import { Person } from './enities/persons/Person'
+import { container } from './ioc/container'
+import { TYPES } from './ioc/types'
+import { emptyBooking } from './utils/faker/BookingFaker'
+import { mockBooking } from './utils/faker/mockBooking'
+import { mockPerson } from './utils/faker/mockPerson'
+import { mockProperty } from './utils/faker/mockProperty'
+import { unknownProperty } from './utils/faker/PropertyFaker'
 
-export function createPersonInstance(
-    person: PERSON_TYPES,
-    name: string,
-    id: number,
-    address: {street: string, city: string, zip: number}
-){
-    validate(name, id, address)
-
-    switch(person){
-        case PERSON_TYPES.PropertyManager:
-            return new PropertyManager(name, id, address)
-        case PERSON_TYPES.Owner:
-            return new Owner(name, id, address)
-        case PERSON_TYPES.Guest:
-            return new Guest(name, id, address)
-    }
-}
-
-export function createPropertyInstance(
-    id: number,
-    name: string,
-    description: string,
-    address: IAddress,
-){
-    validate(name, id, address)
-    const propertyBuilder = container.get<PropertyBuilder>(TYPES.PropertyBuilder)
-    return propertyBuilder
-        .setId(id)
-        .setName(name)
-        .setDescription(description)
-        .setAddress(address)
-        .build()
-}
-
-function validate(name: string, id: number, address: IAddress){
-    const nameValidator = new ValidateName()
-    const idValidator = new ValidateId()
-    const addressValidator = new ValidateAddress()
-
-    if(!nameValidator.validate(name)){
-        throw new Error(ValidationErrors.Name)
-    }
-
-    if(!idValidator.validate(id)){
-        throw new Error(ValidationErrors.Id)
-    }
-
-    if(!addressValidator.validate(address)){
-        throw new Error(ValidationErrors.Address)
-    }
-}
-// Fake person infos.
-const person = container.get<IPerson>(TYPES.PersonFaker)
-const propertyFaker = container.get<IProperty>(TYPES.PropertyFaker)
-
-const unknownPerson = {
-    name: 'Unknown',
-    id: 0,
-    address: {
-        street: 'Unknown',
-        city: 'Unknown',
-        zip: 11111
-    }
-}
-const unknownProperty: IProperty = {
-    id: 0,
-    name: 'Unknown',
-    address: {
-        street: 'Unknown',
-        city: 'Unknown',
-        zip: 11111
-    },
-    owner: unknownPerson,
-    description: 'Empty Description'
-}
-
-let owner : IPerson
 let property : IProperty
+let booking: IBooking
 
 try{
-    owner = createPersonInstance(
-        PERSON_TYPES.Owner,
-        person.name,
-        person.id,
-        person.address
-    )
-    container.bind<Person>(TYPES.Person).toConstantValue(owner)
+    const owner = mockPerson(PERSON_TYPES.Owner)
+    const propertyManager = mockPerson(PERSON_TYPES.PropertyManager)
 
-    property = createPropertyInstance(
-        propertyFaker.id,
-        propertyFaker.name,
-        propertyFaker.description,
-        propertyFaker.address
-    )
+    const guest1 = mockPerson(PERSON_TYPES.Guest)
+    const guest2 = mockPerson(PERSON_TYPES.Guest)
+    const guest3 = mockPerson(PERSON_TYPES.Guest)
+
+    container.bind<Person>(TYPES.Owner).toConstantValue(owner)
+    container.bind<Person>(TYPES.PropertyManager).toConstantValue(propertyManager)
+
+    property = mockProperty()
+
+    container.bind<IPerson[]>(TYPES.Guests).toConstantValue([
+        guest1,
+        guest2,
+        guest3
+    ])
+    container.bind<IProperty>(TYPES.Property).toConstantValue(property)
+
+    booking = mockBooking()
 } catch(error){
     console.log(error)
 
-    owner = unknownPerson
     property = unknownProperty
+    booking = emptyBooking
 }
 
-console.log('Property Owner name: ' + property.owner.name)
+console.log(booking)
+console.log('============================================')
 console.log(property)
-console.log(owner.name)
+console.log('============================================')
+console.log(booking.property.aminities)
+
+export { property }

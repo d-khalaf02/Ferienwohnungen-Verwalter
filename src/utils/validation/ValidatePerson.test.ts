@@ -16,7 +16,7 @@ describe('Validate Person Details', () => {
         {id: 1234567890, expected: true, explaintation: "Because it is 10 digits"},
         {id: 123456789.7, expected: false, explaintation: "Because it is 7-16 digits"},
         {id: 12345, expected: false, explaintation: "Because it is less than 7 digits"},
-        {id: 12345123451234512345, expected: false, explaintation: "Because it is greater than 16 digits"},
+        {id: 123451234512345, expected: false, explaintation: "Because it is greater than 10 digits"},
     ]
 
     const addressScinarios = [

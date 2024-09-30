@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'vitest'
 
-describe('Property', () => {
+describe('BookingBuilder', () => {
 
     test('implementation should be defined', () => {
-        expect(true).toBeDefined()
+
     })
 })

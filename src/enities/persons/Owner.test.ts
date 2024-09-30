@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { describe, test, expect } from "vitest";
 import { Owner } from './Owner';
-import { IPerson } from './IPerson';
-import { container } from '../inversifyContainer';
-import { TYPES } from './types'
+import { IPerson } from '../interfaces/IPerson';
+import { container } from '../../ioc/container';
+import { TYPES } from '../../ioc/types'
 
 const person = container.get<IPerson>(TYPES.PersonFaker)
 
