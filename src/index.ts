@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { PERSON_TYPES } from './enities/enums/Person.enum'
-import type { IBooking } from './enities/interfaces/IBooking'
+import { IBooking } from './enities/interfaces/IBooking'
 import { IPerson } from './enities/interfaces/IPerson'
 import { IProperty } from './enities/interfaces/IProperty'
 import { Person } from './enities/persons/Person'
@@ -44,9 +44,5 @@ try{
 }
 
 console.log(booking)
-console.log('============================================')
-console.log(property)
-console.log('============================================')
-console.log(booking.property.aminities)
 
 export { property }
