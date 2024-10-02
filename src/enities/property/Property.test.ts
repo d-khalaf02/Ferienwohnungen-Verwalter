@@ -1,7 +1,7 @@
 import 'reflect-metadata'
 import { describe, expect, test } from 'vitest'
-import { container } from '../../ioc/container'
-import { TYPES } from '../../ioc/types'
+import { container } from '../../inversify/container'
+import { TYPES } from '../../inversify/types'
 import { Property } from './Property'
 
 const propertyFaker = container.get<Property>(TYPES.PropertyFaker)

@@ -1,11 +1,8 @@
 import type { IAddress } from './IAddress'
+import type { IAminities } from './IAminities'
 import type { IPerson } from './IPerson'
 
-export interface IAminities{
-    name: string,
-    available: boolean,
-    extraCost?: number
-}
+
 
 export interface IProperty {
     id: number

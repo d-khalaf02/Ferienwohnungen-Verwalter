@@ -2,11 +2,13 @@ import { inject, injectable } from 'inversify'
 import { Booking } from '../../enities/booking/booking'
 import type { IPerson } from '../../enities/interfaces/IPerson'
 import type { IProperty } from '../../enities/interfaces/IProperty'
-import { TYPES } from '../../ioc/types'
+import type { IService } from '../../enities/interfaces/IServices'
+import { TYPES } from '../../inversify/types'
 
 @injectable()
 export class BookingBuilder{
     private id!: number
+    private services!: IService[]
     private checkInDate!: Date
     private checkOutDate!: Date
 
@@ -17,6 +19,11 @@ export class BookingBuilder{
 
     setId(id: number){
         this.id = id
+        return this
+    }
+
+    setServices(services: IService[]){
+        this.services = services
         return this
     }
 
@@ -35,6 +42,7 @@ export class BookingBuilder{
             this.id,
             this.property,
             this.guests,
+            this.services,
             this.checkInDate,
             this.checkOutDate
         )

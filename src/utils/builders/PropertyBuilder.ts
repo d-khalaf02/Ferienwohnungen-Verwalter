@@ -3,7 +3,7 @@ import type { IAddress } from '../../enities/interfaces/IAddress'
 import type { IPerson } from '../../enities/interfaces/IPerson'
 import type { IAminities, IProperty } from '../../enities/interfaces/IProperty'
 import { Property } from '../../enities/property/Property'
-import { TYPES } from '../../ioc/types'
+import { TYPES } from '../../inversify/types'
 
 @injectable()
 export class PropertyBuilder{

@@ -1,7 +1,7 @@
 import { IProperty } from '../../enities/interfaces/IProperty'
 import { createPropertyInstance } from '../../enities/property/createPropertyInstance'
-import { container } from '../../ioc/container'
-import { TYPES } from '../../ioc/types'
+import { container } from '../../inversify/container'
+import { TYPES } from '../../inversify/types'
 
 
 export function mockProperty(){

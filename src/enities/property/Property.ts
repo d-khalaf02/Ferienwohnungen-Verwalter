@@ -1,9 +1,10 @@
 import 'reflect-metadata'
 import { inject, injectable } from 'inversify'
 import type { IAddress } from '../interfaces/IAddress'
+import type { IAminities } from '../interfaces/IAminities'
 import type { IPerson } from '../interfaces/IPerson'
-import type { IAminities, IProperty } from '../interfaces/IProperty'
-import { TYPES } from '../../ioc/types'
+import type { IProperty } from '../interfaces/IProperty'
+import { TYPES } from '../../inversify/types'
 
 
 @injectable()

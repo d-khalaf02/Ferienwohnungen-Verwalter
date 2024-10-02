@@ -1,9 +1,9 @@
-import { container } from '../../ioc/container'
+import { container } from '../../inversify/container'
 import type { PropertyBuilder } from '../../utils/builders/PropertyBuilder'
 import { Validator } from '../../utils/validation/Validator'
 import { IAddress } from '../interfaces/IAddress'
-import { TYPES } from '../../ioc/types'
-import type { IAminities } from '../interfaces/IProperty'
+import { TYPES } from '../../inversify/types'
+import type { IAminities } from '../interfaces/IAminities'
 
 export function createPropertyInstance(
     id: number,

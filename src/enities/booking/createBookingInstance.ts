@@ -1,9 +1,11 @@
-import { container } from '../../ioc/container'
-import { TYPES } from '../../ioc/types'
+import { container } from '../../inversify/container'
+import { TYPES } from '../../inversify/types'
 import { BookingBuilder } from '../../utils/builders/BookingBuilder'
+import type { IServices } from '../interfaces/IServices'
 
 export function createBookingInstance(
     id: number,
+    services: IServices,
     checkInDate: Date,
     checkOutDate: Date
 ){
@@ -11,6 +13,7 @@ export function createBookingInstance(
 
     return bookingBuilder
         .setId(id)
+        .setServices(services)
         .setCheckInDate(checkInDate)
         .setCheckOutDate(checkOutDate)
         .build()
